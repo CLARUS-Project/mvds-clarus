@@ -9,12 +9,13 @@ Minimum Viable Data Space for Clarus project
 
 ## Table of contents
 * [**Architecture**](#architecture)
+* [**Current Version**](#current-version)
+* [**Development Stage**](#development-stage)
 * [**Requirements**](#requirements)
 * [**Setup**](#setup)
 * [**Important Notes**](#important-notes)
 * [**Troubleshoot**](#troubleshoot)
 * [**Contacts**](#contacts)
-* [**Status**](#status)
 <!--* [**License**](#license)-->
 <!--* [**Endpoints**](#endpoints)-->
 
@@ -22,10 +23,19 @@ Minimum Viable Data Space for Clarus project
 
 ![Architecture](docs/images/clarus-architecture.jpg)
 
+## Current Version
+
+Status: _in development stage_
+
+## Development Stage
+
+![Development Stage](docs/images/Development%20stage%201.png)
+Status: _Work in Progress_
+
 ## Requirements
 
-| Description                                     |      Version     |
-| :---------------------------------------------- | :--------------: |
+| Description    |      Version     |
+| :------------- | :--------------: |
 
 ## Setup
 
@@ -47,10 +57,6 @@ TODO...
 | :---------------------- | :-------------------: |
 | [Luigi Di Corrado]([1]) | luigi.dicorrado@eng.it|
 | [Luca Di Lorenzo]([2])  | luca.dilorenzo@eng.it |
-
-## Status
-
-Project: _in Progress_
 
 <!--
 ## License
