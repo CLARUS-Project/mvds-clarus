@@ -7,9 +7,9 @@
 <!--the list of used link is at the bottom of the file-->
 
 # Minimum Viable Data Space (MVDS) for Clarus Project
-This repository will provide a deployment scenario of a Minimum Viable Data Space ([MVDS]([3])), defined using the International Data Spaces Assosiation ([IDSA]([4])) specification, as a solution for data exchange on the CLARUS project.
-The open source TRUsted Engineering Connector ([TRUE Connector]([5])), developed by the Engineering group, will be used among the IDS components chosen to implement this solution.
-The installation and configuration on which this paper will be based will refer to the guidelines defined on the [IDS testbed]([6]).
+This repository will provide a deployment scenario of a Minimum Viable Data Space ([MVDS][mvds]), defined using the International Data Spaces Assosiation ([IDSA][idsa]) specification, as a solution for data exchange on the CLARUS project.
+The open source TRUsted Engineering Connector ([TRUE Connector][true-connector]), developed by the Engineering group, will be used among the IDS components chosen to implement this solution.
+The installation and configuration on which this paper will be based will refer to the guidelines defined on the [IDS testbed][testbend].
 The project is currently in an early state of development, therefore, more information will be included as development progresses.
 
 ## Table of contents
@@ -50,14 +50,14 @@ It is recommended to use 64bit quad core processor to provide enough processing 
 
 ### Software Requirements
 
-|      Name      |      Version     |          Notes        |
-| :------------: | :--------------: | :-------------------: |
-|     Docker     |    20.10.7       | [Docker]([7])         |
-| Docker-compose |     1.27.4       | [Docker-compose]([7]) |
-|     Java       |       11         | [Java]([8])           |
-|     Maven      |      3.6.3       | [Maven]([9])          |
-|     Ruby       |      2.7.0       | [Ruby]([10])          |
-|    Python      |        3         | [Python]([11])        |
+|      Name      |      Version     |             Notes        |
+| :------------: | :--------------: | :----------------------: |
+|     Docker     |    20.10.7       | [Docker][docker]         |
+| Docker-compose |     1.27.4       | [Docker-compose][docker] |
+|     Java       |       11         | [Java][java]             |
+|     Maven      |      3.6.3       | [Maven][maven]           |
+|     Ruby       |      2.7.0       | [Ruby][ruby]             |
+|    Python      |        3         | [Python][python]         |
 <!--|     Ubuntu     |   20.04.1 LTS    |--> 
 
 
@@ -77,10 +77,10 @@ TODO...
 
 ## Support Team
 
-| Name                    |        E-mail         |
-| :---------------------- | :-------------------: |
-| [Luigi Di Corrado]([luigi]) | luigi.dicorrado@eng.it|
-| [Luca Di Lorenzo]([2])  | luca.dilorenzo@eng.it |
+| Name                      |        E-mail         |
+| :------------------------ | :-------------------: |
+| [Luigi Di Corrado][luigi] | luigi.dicorrado@eng.it|
+| [Luca Di Lorenzo][luca]   | luca.dilorenzo@eng.it |
 
 <!--
 ## License
@@ -90,23 +90,23 @@ TODO...
 
 [luigi]: https://github.com/luidicorra
 
-[2]: https://github.com/ludilorenz
+[luca]: https://github.com/ludilorenz
 
-[3]: https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/minimum-viable-data-space/MVDS.md
+[mvds]: https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/minimum-viable-data-space/MVDS.md
 
-[4]: https://internationaldataspaces.org/
+[idsa]: https://internationaldataspaces.org/
 
-[5]: https://github.com/Engineering-Research-and-Development/true-connector
+[true-connector]: https://github.com/Engineering-Research-and-Development/true-connector
 
-[6]: https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/InstallationGuide.md
+[testbend]: https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/InstallationGuide.md
 
-[7]: https://docs.docker.com/
+[docker]: https://docs.docker.com/
 
-[8]: https://docs.oracle.com/en/java/javase/11/ 
+[java]: https://docs.oracle.com/en/java/javase/11/ 
 
-[9]: https://maven.apache.org/guides/index.html
+[maven]: https://maven.apache.org/guides/index.html
 
-[10]: https://ruby-doc.org/
+[ruby]: https://ruby-doc.org/
 
-[11]: https://docs.python.org/3/
+[python]: https://docs.python.org/3/
 
