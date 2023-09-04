@@ -79,7 +79,7 @@ TODO...
 
 | Name                      |        E-mail         |
 | :------------------------ | :-------------------: |
-| [Luigi Di Corrado][luigi] | luigi.dicorrado@eng.it|
+| [Luigi di Corrado][luigi] | luigi.dicorrado@eng.it|
 | [Luca Di Lorenzo][luca]   | luca.dilorenzo@eng.it |
 
 <!--
