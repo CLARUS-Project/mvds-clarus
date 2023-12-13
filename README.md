@@ -7,7 +7,7 @@
 <!--the list of used link is at the bottom of the file-->
 
 # Minimum Viable Data Space (MVDS) for Clarus Project
-This repository will provide a deployment scenario of a Minimum Viable Data Space ([MVDS][mvds]) defined using the International Data Spaces Assosiation ([IDSA][idsa]) specification, as a solution for data exchange on the CLARUS project.
+This repository will provide a deployment scenario of a Minimum Viable Data Space ([MVDS][mvds]), defined using the International Data Spaces Assosiation ([IDSA][idsa]) specification, as a solution for data exchange on the CLARUS project.
 The open source TRUsted Engineering Connector ([TRUE Connector][true-connector]), developed by the Engineering group, will be used among the IDS components chosen to implement this solution.
 The installation and configuration on which this paper will be based will refer to the guidelines defined on the [IDS testbed][testbend].
 The project is currently in an early state of development, therefore, more information will be included as development progresses.
