@@ -37,6 +37,14 @@ Status: _in development stage_
 ![Development Stage](docs/images/Development%20stage%201.png)
 Status: _Work in Progress_
 
+**Components deployed**
+
+|    Component    | Progress |
+| :-------------: | :------: |
+| DAPS            | 100%     |
+| CA              | 100%     |
+| Metadata Broker | 80%      |
+
 ## Requirements
 
 ### Hardware Requirements
@@ -69,7 +77,8 @@ TODO...
 
 ## Important Notes
 
-TODO...
+In the current state of development, the DAPS component has been properly integrated into MVDS.
+The Metadata Broker still has some anomalies during interaction, investigations are being made into the cause of the problem.
 
 ## Troubleshoot
 
