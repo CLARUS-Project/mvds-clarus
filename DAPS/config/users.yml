@@ -1,0 +1,11 @@
+---
+- username: admin
+  attributes:
+  - key: omejdn
+    value: admin
+  password: "$2a$12$.mic3PJuXfK.MTBpP.XpX.nt3DcuSOQeBZ177fUB3LKBMsVobEEzi"
+- username: j6k9qjcwul
+  attributes:
+  - key: omejdn
+    value: admin
+  password: "$2a$12$zLZgaFu/D381Xpg5oasDNeHeRDK1ECFCMxT1/y0nK96nQbonoYPCu"

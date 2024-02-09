@@ -1,0 +1,91 @@
+---
+- client_id: E2:C4:24:73:A1:0A:B1:20:E6:EE:77:5B:CB:24:98:7E:39:74:25:49:keyid:41:30:3C:7E:87:C2:EF:66:72:27:91:82:EF:56:E9:0C:5C:2B:BC:2B
+  client_name: testbed1
+  grant_types: client_credentials
+  token_endpoint_auth_method: private_key_jwt
+  scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+  attributes:
+  - key: idsc
+    value: IDS_CONNECTOR_ATTRIBUTES_ALL
+  - key: securityProfile
+    value: idsc:BASE_SECURITY_PROFILE
+  - key: referringConnector
+    value: http://testbed1.demo
+  - key: "@type"
+    value: ids:DatPayload
+  - key: "@context"
+    value: https://w3id.org/idsa/contexts/context.jsonld
+  - key: transportCertsSha256
+    value: a82df8ba258599522a4d7516ecca09d76494ee568fc3b84ec59c32d2fc2179dc
+- client_id: F0:29:3D:CE:68:FA:07:14:FA:DF:47:C1:3C:E2:37:63:FC:95:A1:0D:keyid:41:30:3C:7E:87:C2:EF:66:72:27:91:82:EF:56:E9:0C:5C:2B:BC:2B
+  client_name: testbed2
+  grant_types: client_credentials
+  token_endpoint_auth_method: private_key_jwt
+  scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+  attributes:
+  - key: idsc
+    value: IDS_CONNECTOR_ATTRIBUTES_ALL
+  - key: securityProfile
+    value: idsc:BASE_SECURITY_PROFILE
+  - key: referringConnector
+    value: http://testbed2.demo
+  - key: "@type"
+    value: ids:DatPayload
+  - key: "@context"
+    value: https://w3id.org/idsa/contexts/context.jsonld
+  - key: transportCertsSha256
+    value: 5cefdb731f0764b8d48a72dec4d28aabef0d8d7e0d92bc4598d2ac028f786eef
+- client_id: 07:69:AC:6A:83:BE:38:C2:B6:CA:80:A8:70:5A:97:EB:7C:AA:81:B2:keyid:41:30:3C:7E:87:C2:EF:66:72:27:91:82:EF:56:E9:0C:5C:2B:BC:2B
+  client_name: testbed3
+  grant_types: client_credentials
+  token_endpoint_auth_method: private_key_jwt
+  scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+  attributes:
+  - key: idsc
+    value: IDS_CONNECTOR_ATTRIBUTES_ALL
+  - key: securityProfile
+    value: idsc:BASE_SECURITY_PROFILE
+  - key: referringConnector
+    value: http://testbed3.demo
+  - key: "@type"
+    value: ids:DatPayload
+  - key: "@context"
+    value: https://w3id.org/idsa/contexts/context.jsonld
+  - key: transportCertsSha256
+    value: 58718395a04a600099a819b867b73ff9ae7a87266cd38be17aea741d58a45a8f
+- client_id: 70:87:E7:00:A2:AF:1C:88:51:B2:2B:3E:1C:C5:F5:63:3F:0F:26:DE:keyid:70:87:E7:00:A2:AF:1C:88:51:B2:2B:3E:1C:C5:F5:63:3F:0F:26:DE
+  client_name: daps-clarus
+  grant_types: client_credentials
+  token_endpoint_auth_method: private_key_jwt
+  scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+  attributes:
+  - key: idsc
+    value: IDS_CONNECTOR_ATTRIBUTES_ALL
+  - key: securityProfile
+    value: idsc:BASE_SECURITY_PROFILE
+  - key: referringConnector
+    value: http://daps-clarus.demo
+  - key: "@type"
+    value: ids:DatPayload
+  - key: "@context"
+    value: https://w3id.org/idsa/contexts/context.jsonld
+  - key: transportCertsSha256
+    value: f1957a1cb886be40df57d7eba31704038254ef6bea456539e1e186f0f9140a0e
+- client_id: 0B:28:2C:C5:99:80:AD:83:5D:8E:6B:63:1D:D4:9E:37:46:F6:C9:01:keyid:0B:28:2C:C5:99:80:AD:83:5D:8E:6B:63:1D:D4:9E:37:46:F6:C9:01
+  client_name: provider-clarus
+  grant_types: client_credentials
+  token_endpoint_auth_method: private_key_jwt
+  scope: idsc:IDS_CONNECTOR_ATTRIBUTES_ALL
+  attributes:
+  - key: idsc
+    value: IDS_CONNECTOR_ATTRIBUTES_ALL
+  - key: securityProfile
+    value: idsc:BASE_SECURITY_PROFILE
+  - key: referringConnector
+    value: http://provider-clarus.demo
+  - key: "@type"
+    value: ids:DatPayload
+  - key: "@context"
+    value: https://w3id.org/idsa/contexts/context.jsonld
+  - key: transportCertsSha256
+    value: af94412ae6317a66b379ce77753f1574cf9e0b4b74502eaaf138ce8bdc70bb66

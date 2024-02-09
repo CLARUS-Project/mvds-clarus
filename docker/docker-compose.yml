@@ -1,1 +1,113 @@
-#TODO
+services:
+
+#Omejdn
+  omejdn:
+    image: nginx:1.21.6
+    container_name: omejdn
+    ports:
+      - 8080:80
+      - 8443:443
+    depends_on:
+      - broker-fuseki
+    environment:
+      - OMEJDN_DOMAIN=${OMEJDN_DOMAIN}
+      - OMEJDN_PATH=${OMEJDN_PATH}
+      - UI_PATH=${UI_PATH}
+      - BROKER_DOMAIN=${BROKER_DOMAIN}
+    volumes:
+      - ./DAPS/nginx.conf_original:/etc/nginx/templates/default.conf.template
+      - ./DAPS/keys/TLS/daps.cert:/etc/nginx/daps.cert
+      - ./DAPS/keys/TLS/daps.key:/etc/nginx/daps.key
+#      - ./DAPS/keys/TLS/daps-clarus.cert:/etc/nginx/daps.cert
+#      - ./DAPS/keys/TLS/daps-clarus.key:/etc/nginx/daps.key
+#      - ./MetadataBroker/server.crt:/etc/nginx/server.crt
+#      - ./MetadataBroker/server.key:/etc/nginx/server.key
+    networks:
+      - local
+
+  omejdn-server:
+    image: ghcr.io/fraunhofer-aisec/omejdn-server:${OMEJDN_VERSION}
+    container_name: omejdn-server
+    environment:
+      - OMEJDN_ISSUER=${OMEJDN_ISSUER}
+      - OMEJDN_FRONT_URL=${OMEJDN_ISSUER}
+      - OMEJDN_OPENID=true
+      - OMEJDN_ENVIRONMENT=${OMEJDN_ENVIRONMENT}
+      - OMEJDN_ACCEPT_AUDIENCE=idsc:IDS_CONNECTORS_ALL
+      - OMEJDN_DEFAULT_AUDIENCE=idsc:IDS_CONNECTORS_ALL
+      - OMEJDN_ADMIN=${ADMIN_USERNAME}:${ADMIN_PASSWORD}
+    volumes:
+      - ./DAPS/config:/opt/config
+      - ./DAPS/keys:/opt/keys
+    networks:
+      - local
+
+  omejdn-ui:
+    image: ghcr.io/fraunhofer-aisec/omejdn-ui:${UI_VERSION}
+    container_name: omejdn-ui
+    environment:
+      - OIDC_ISSUER=${OMEJDN_ISSUER}
+      - API_URL=${OMEJDN_ISSUER}/api/v1
+      - CLIENT_ID=adminUI
+    networks:
+      - local
+
+#Metadata Broker
+  broker-reverseproxy:
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
+    container_name: broker-reverseproxy
+    volumes:
+      - ./MetadataBroker/server.crt:/etc/cert/server.crt
+      - ./MetadataBroker/server.key:/etc/cert/server.key
+    ports:
+      - "8444:443" # IDS-HTTP API
+      - "8081:80"
+    depends_on:
+      - broker-core
+    networks:
+      - local
+
+  broker-core:
+    image: idstestbed/broker-core:5.0.3
+    container_name: broker-core
+    volumes:
+      #- ./MetadataBroker/isstbroker-keystore.jks:/etc/cert/isstbroker-keystore.jks
+      - ./MetadataBroker/broker-keystore.jks:/etc/cert/isstbroker-keystore.jks
+      - ./DAPS/keys/TLS/daps.cert:/opt/java/openjdk/lib/security/daps.crt
+#   ports:
+#      - "18080:8080"
+    environment:
+      - SPARQL_ENDPOINT=http://broker-fuseki:3030/connectorData
+      - ELASTICSEARCH_HOSTNAME=broker-elasticsearch
+      - SHACL_VALIDATION=true
+      - DAPS_VALIDATE_INCOMING=true
+      - COMPONENT_URI=https://localhost/
+      - COMPONENT_CATALOGURI=https://localhost/connectors/
+      #- DAPS_URL=${OMEJDN_ISSUER}/token
+      #- DAPS_URL=https://omejdn/auth/token
+      - DAPS_URL=https://daps.mvds-clarus.eu/auth/token
+    expose:
+      - "8080"
+    networks:
+      - local
+
+  broker-fuseki:
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+    container_name: broker-fuseki
+    volumes:
+      - broker-fuseki:/fuseki
+#    ports:
+#      - "13030:3030"
+    expose:
+      - "3030"
+    networks:
+      - local
+
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  broker-fuseki: {}
+
