@@ -1,0 +1,52 @@
+services:
+
+#Omejdn
+  omejdn:
+    image: nginx:1.21.6
+    container_name: omejdn
+    ports:
+      - 8080:80
+      - 8443:443
+    environment:
+      - OMEJDN_DOMAIN=${OMEJDN_DOMAIN}
+      - OMEJDN_PATH=${OMEJDN_PATH}
+      - UI_PATH=${UI_PATH}
+    volumes:
+      - ./DAPS/nginx.conf:/etc/nginx/templates/default.conf.template
+      - ./DAPS/keys/TLS/daps-test-clarus.cert:/etc/nginx/daps.cert
+      - ./DAPS/keys/TLS/daps-test-clarus.key:/etc/nginx/daps.key
+    networks:
+      - local
+
+  omejdn-server:
+    image: ghcr.io/fraunhofer-aisec/omejdn-server:${OMEJDN_VERSION}
+    container_name: omejdn-server
+    environment:
+      - OMEJDN_ISSUER=${OMEJDN_ISSUER}
+      - OMEJDN_FRONT_URL=${OMEJDN_ISSUER}
+      - OMEJDN_OPENID=true
+      - OMEJDN_ENVIRONMENT=${OMEJDN_ENVIRONMENT}
+      - OMEJDN_ACCEPT_AUDIENCE=idsc:IDS_CONNECTORS_ALL
+      - OMEJDN_DEFAULT_AUDIENCE=idsc:IDS_CONNECTORS_ALL
+      - OMEJDN_ADMIN=${ADMIN_USERNAME}:${ADMIN_PASSWORD}
+    volumes:
+      - ./DAPS/config:/opt/config
+      - ./DAPS/keys:/opt/keys
+    networks:
+      - local
+
+  omejdn-ui:
+    image: ghcr.io/fraunhofer-aisec/omejdn-ui:${UI_VERSION}
+    container_name: omejdn-ui
+    environment:
+      - OIDC_ISSUER=${OMEJDN_ISSUER}
+      - API_URL=${OMEJDN_ISSUER}/api/v1
+      - CLIENT_ID=adminUI
+    networks:
+      - local
+
+
+networks:
+  local:
+    driver: bridge
+
