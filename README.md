@@ -14,12 +14,10 @@ The project is currently in an early state of development, therefore, more infor
 
 ## Table of contents
 * [**Architecture**](#architecture)
-* [**Current Version**](#current-version)
-* [**Development Stage**](#development-stage)
-* [**Requirements**](#requirements)
+* [**Development Status**](#development-status)
+* [**Installation Requirements**](#installation-requirements)
 * [**Setup**](#setup)
 * [**Important Notes**](#important-notes)
-* [**Troubleshoot**](#troubleshoot)
 * [**Support Team**](#support-team)
 <!--* [**License**](#license)-->
 <!--* [**Endpoints**](#endpoints)-->
@@ -28,24 +26,20 @@ The project is currently in an early state of development, therefore, more infor
 
 ![Architecture](docs/images/clarus-architecture.jpg)
 
-## Current Version
-
-Status: _in development stage_
-
-## Development Stage
+## Development Status
 
 ![Development Stage](docs/images/Development%20stage%201.png)
 Status: _Work in Progress_
 
 **Components deployed**
 
-|    Component    | Progress |
-| :-------------: | :------: |
-| DAPS            | 100%     |
-| CA              | 100%     |
-| Metadata Broker | 80%      |
+|    Component                  | Progress |
+| :---------------------------: | :------: |
+| Onejdn DAPS                   | 100%     |
+| Metadata Broker               | 90%      |
+| Clearing House                | 10%      |
 
-## Requirements
+## Installation Requirements
 
 ### Hardware Requirements
 
@@ -53,6 +47,7 @@ Status: _Work in Progress_
 | :-----: | :-----------------------: |
 |   RAM   | 4GB (8GB is reccomended)  |
 | Storage |           50GB            |
+|   CPU   |          6-Core           |
 
 It is recommended to use 64bit quad core processor to provide enough processing power for all docker containers. 
 
@@ -60,29 +55,37 @@ It is recommended to use 64bit quad core processor to provide enough processing 
 
 |      Name      |      Version     |             Notes        |
 | :------------: | :--------------: | :----------------------: |
-|     Docker     |    20.10.7       | [Docker][docker]         |
-| Docker-compose |     1.27.4       | [Docker-compose][docker] |
-|     Java       |       11         | [Java][java]             |
-|     Maven      |      3.6.3       | [Maven][maven]           |
-|     Ruby       |      2.7.0       | [Ruby][ruby]             |
-|    Python      |        3         | [Python][python]         |
-<!--|     Ubuntu     |   20.04.1 LTS    |--> 
+|     Docker     |     24.0.7       | [Docker][docker]         |
+| Docker-compose |     v2.21.0      | [Docker-compose][docker] |
 
 
 ## Setup
 
-TODO...
+### MVDS Components
+This is the procedure to install and run the MVDS in a local environment, the configuration will use basic settings.
+For a real scenario, a DNS and a proper Certification Authority are required.
+ 1. Download the source files from this repository. 
+ 2. Inside the “**DAPS**” folder there are the “**config**”, “**keys**” folders and the client registration script “**register_connector.sh**”.
+ 3.	The “**.env**” file contains several environment variables, each of them followed by a comment explaining the purpose.
+ 4. Set the variable “**OMEJDN_DOMAIN**” with the name of the domain to set up, e.g. “my-host.test”.
+ 5. For security purpose, set up a different username and password by editing “**ADMIN_USERNAME**” and “**ADMIN_PASSWORD**” variables.
+ 6. Now open the “**docker-compose.yml**” file and If it’s necessary change the host ports of “**Omejdn**” image which are currently set as 8080 and 8443 and **Save**.
+ 7. Run a command prompt or shell and execute the “**docker-compose pull**” command
+ 8. When the pull is completed, run the command “**docker-compose up -d**” to run the container.
+ 9. Now the DAPS service container should be up and running!
+ Note: Check the “**Omejdn.yml**” file inside the “**config**” folder, where the value of the properties “**issuer**” and “**front_url**” should be the same of “**OMEJDN_ISSUER**” env variable.
 
+For more details regarding the Omejdn server and how to use advanced featuers and configurations, please follow the official documentation 
+provided by the Fraunhofer-AISEC team inside the component [GitHub repository][omejdn]
+
+### TRUE Connector integration with DAPS
+TO DO...
 <!--## Endpoints-->
 
 ## Important Notes
 
 In the current state of development, the DAPS component has been properly integrated into MVDS.
 The Metadata Broker still has some anomalies during interaction, investigations are being made into the cause of the problem.
-
-## Troubleshoot
-
-TODO...
 
 ## Support Team
 
@@ -109,13 +112,7 @@ TODO...
 
 [testbend]: https://github.com/International-Data-Spaces-Association/IDS-testbed/blob/master/InstallationGuide.md
 
-[docker]: https://docs.docker.com/
+[docker]: https://docs.docker.com/         
 
-[java]: https://docs.oracle.com/en/java/javase/11/ 
-
-[maven]: https://maven.apache.org/guides/index.html
-
-[ruby]: https://ruby-doc.org/
-
-[python]: https://docs.python.org/3/
+[omejdn]: https://github.com/Fraunhofer-AISEC/omejdn-server
 
