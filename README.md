@@ -79,7 +79,56 @@ For more details regarding the Omejdn server and how to use advanced featuers an
 provided by the Fraunhofer-AISEC team inside the component [GitHub repository][omejdn]
 
 ### TRUE Connector integration with DAPS
-TO DO...
+The following steps describe how to integrate a TRUE Connector instance with DAPS, for more infos and details about TRUE Connector, refer to the official repository [here][true-connector]:
+ 1. Generate **certificate-key pairs** (.cert and .key, respectively) using OpenSSL command, example:
+ ```
+ openssl req -x509 -nodes -newkey rsa:2048 -keyout test-tc-consumer-clarus.key -out test-tc-consumer-clarus.cert -sha256 -days 365 -subj "/C=IT/ST=Italy/L=Trento/O=Engineering Ingegneria Informatica SpA/OU=R&D/CN=clarus-data-space" -addext "subjectAltName=DNS:clarus-data-space"
+ ```
+ 
+ 2. Now generate a **.p12 archive** with OpenSSL, using the above generated pairs:
+ ```
+ openssl pkcs12 -export -out clarus-data-space.p12 -inkey test-tc-consumer-clarus.key -in test-tc-consumer-clarus.cert -name clarus-data-space
+ ```
+ 
+ 3. Set a password when asked
+ 
+ 4. Place the **.p12 archive** inside the **"cert"** folder of the respective TRUE Connector
+ 
+ 5. To register the connector as Client, place the **.cert** file generated on step 1 inside the **"DAPS/keys"** folder
+ 
+ 6. Now open a command shell from the **"DAPS"** folder where the **register_connector.sh** script is located and run the command:
+  ```
+ bash register_connector.sh test-tc-consumer-clarus.cert
+  ```
+  
+  7. The client will be registered within the file **"config/clients.yml"**
+  
+  8. Restart the **DAPS docker container** to complete the registration, the registered client certificate is saved in the **"DAPS/keys/clients"** folder. The file name is encoded as **base64**, and it refers to the **client_id** value that is registered inside the **"config/clients.yml"** file.
+  
+  9. If the MVDS is hosted on a machine with a real DNS configured and a Certification Authority, then download the **public DAPS certificate** from the host.
+  
+  10. Back on TRUE Connector side, import the public DAPS certificate inside the connector trustore located inside the folder **"cert"**, example:
+  ```
+  keytool -import -file mvds-clarus.eu -keystore “./TRUEConnector/cert/ true-connector-consumer-truststore.jks" -alias 'mvds-clarus.eu (r3)' -storepass trustorePassword -noprompt
+  ```
+  Note: the trustorePassword is defined as variable named **TRUSTORE_PASSWORD** within the **.env** file of TRUE Connector.
+  
+  11. Edit the the below variables on **".env"** file of TRUE Connector:
+  
+	•	DAPS_KEYSTORE_NAME: must contain the name of “.p12” archive that was generated on step 2) of the above instructions (e.g. clarus-data-space.p12).
+	•	DAPS_KEYSTORE_PASSWORD: input here the password defined for the “.p12” archive on step 3).
+	•	DAPS_KEYSTORE_ALIAS: contain the alias defined on the command parameter “-name” used to generate the “.p12” archive (e.g., clarus-data-space).
+
+  12. The **Host URLs for DAPS** must be set inside the properties of the **ECC component**, move to folder **"ecc-resources"** of TRUE Connector and open the file **"application-docker.properties"**.
+  
+  13. Find the property **application.isEnabledDapsInteraction** and set the value to **true**
+  
+  14. Now find the property **application.dapsUrl** and set the token endpoint of the DAPS as value (e.g., https://daps.mvds-clarus.eu/auth/token).
+  
+  15. On the property **application.dapsJWKSUrl** and set the jwks endpoint of the DAPS as value (e.g. https://daps.mvds-clarus.eu/auth/jwks.json).
+
+Once the above configuration is completed, start the TRUE Connector using docker, and check the logs messages. If everything was set correctly the message **"Token is valid"** will be shown during each interaction and also at start up of the container.
+ 
 <!--## Endpoints-->
 
 ## Important Notes
