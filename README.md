@@ -133,8 +133,7 @@ Once the above configuration is completed, start the TRUE Connector using docker
 
 ## Important Notes
 
-In the current state of development, the DAPS component has been properly integrated into MVDS.
-The Metadata Broker still has some anomalies during interaction, investigations are being made into the cause of the problem.
+In the current state of development, the Metadata Broker component has been properly integrated into MVDS.
 
 ## Support Team
 
