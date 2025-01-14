@@ -7,10 +7,13 @@ services:
     ports:
       - 8080:80
       - 8443:443
+    depends_on:
+      - broker-fuseki
     environment:
       - OMEJDN_DOMAIN=${OMEJDN_DOMAIN}
       - OMEJDN_PATH=${OMEJDN_PATH}
       - UI_PATH=${UI_PATH}
+      - BROKER_DOMAIN=${BROKER_DOMAIN}
     volumes:
       - ./DAPS/nginx.conf:/etc/nginx/templates/default.conf.template
       - ./DAPS/keys/TLS/daps-test-clarus.cert:/etc/nginx/daps.cert
@@ -45,8 +48,58 @@ services:
     networks:
       - local
 
+#Metadata Broker
+  broker-reverseproxy:
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/reverseproxy
+    container_name: broker-reverseproxy
+    volumes:
+      - ./MetadataBroker/server.cert:/etc/cert/server.crt
+      - ./MetadataBroker/server.key:/etc/cert/server.key
+    ports:
+      - "8444:443" # IDS-HTTP API
+      - "8081:80"
+    depends_on:
+      - broker-core
+    networks:
+      - local
+
+  broker-core:
+    image: clarus-broker-core:5.0.3
+    container_name: broker-core
+    volumes:
+      - ./MetadataBroker/clarus-isstbroker-keystore.jks:/etc/cert/clarus-isstbroker-keystore.jks
+      - ./MetadataBroker/server.cert:/etc/cert/server.crt
+    environment:
+      - SPARQL_ENDPOINT=http://broker-fuseki:3030/connectorData
+      - ELASTICSEARCH_HOSTNAME=broker-elasticsearch
+      - SHACL_VALIDATION=true
+      - DAPS_VALIDATE_INCOMING=true
+      - COMPONENT_URI=https://broker.mvds-clarus.eu/
+      - COMPONENT_CATALOG_URI=https://broker.mvds-clarus.eu/connectors/
+      - DAPS_URL=${OMEJDN_ISSUER}/token
+      - IDENTITY_JAVAKEYSTORE=/etc/cert/clarus-isstbroker-keystore.jks
+      - JWKS_TRUSTEDHOSTS=omejdn,daps.mvds-clarus.eu
+    expose:
+      - "8080"
+    networks:
+      - local
+
+  broker-fuseki:
+    image: registry.gitlab.cc-asp.fraunhofer.de/eis-ids/broker-open/fuseki
+    container_name: broker-fuseki
+    volumes:
+      - broker-fuseki:/fuseki
+    environment:
+      - ADMIN_PASSWORD=PASSWORD
+    expose:
+      - "3030"
+    networks:
+      - local
 
 networks:
   local:
     driver: bridge
+
+volumes:
+  broker-fuseki: {}
 
