@@ -74,11 +74,11 @@ services:
       - ELASTICSEARCH_HOSTNAME=broker-elasticsearch
       - SHACL_VALIDATION=true
       - DAPS_VALIDATE_INCOMING=true
-      - COMPONENT_URI=https://broker.mvds-clarus.eu/
-      - COMPONENT_CATALOG_URI=https://broker.mvds-clarus.eu/connectors/
+      - COMPONENT_URI=https://${BROKER_DOMAIN}/
+      - COMPONENT_CATALOG_URI=https://${BROKER_DOMAIN}/connectors/
       - DAPS_URL=${OMEJDN_ISSUER}/token
       - IDENTITY_JAVAKEYSTORE=/etc/cert/clarus-isstbroker-keystore.jks
-      - JWKS_TRUSTEDHOSTS=omejdn,daps.mvds-clarus.eu
+      - JWKS_TRUSTEDHOSTS=omejdn,${OMEJDN_DOMAIN}
     expose:
       - "8080"
     networks:
