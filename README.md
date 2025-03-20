@@ -7,17 +7,15 @@
 <!--the list of used link is at the bottom of the file-->
 
 # Minimum Viable Data Space (MVDS) for Clarus Project
-This repository will provide a deployment scenario of a Minimum Viable Data Space ([MVDS][mvds]), defined using the International Data Spaces Assosiation ([IDSA][idsa]) specification, as a solution for data exchange on the CLARUS project.
-The open source TRUsted Engineering Connector ([TRUE Connector][true-connector]), developed by the Engineering group, will be used among the IDS components chosen to implement this solution.
-The installation and configuration on which this paper will be based will refer to the guidelines defined on the [IDS testbed][testbend].
-The project is currently in an early state of development, therefore, more information will be included as development progresses.
+This repository provides a deployment scenario for a Minimum Viable Data Space ([MVDS][mvds]), defined according to the specifications of the International Data Spaces Association ([IDSA][idsa]). This solution is designed for data exchange within the CLARUS project.
+The open-source TRUsted Engineering Connector ([TRUE Connector][true-connector]), developed by the Engineering group, will be utilized among the selected IDS components to implement this solution.
+The installation and configuration procedures described in this document adhere to the guidelines established by the [IDS testbed][testbend].
 
 ## Table of contents
 * [**Architecture**](#architecture)
 * [**Development Status**](#development-status)
 * [**Installation Requirements**](#installation-requirements)
 * [**Setup**](#setup)
-* [**Important Notes**](#important-notes)
 * [**Support Team**](#support-team)
 <!--* [**License**](#license)-->
 <!--* [**Endpoints**](#endpoints)-->
@@ -36,8 +34,8 @@ Status: _Work in Progress_
 |    Component                  | Progress |
 | :---------------------------: | :------: |
 | Onejdn DAPS                   | 100%     |
-| Metadata Broker               | 90%      |
-| Clearing House                | 10%      |
+| Metadata Broker               | 100%     |
+| Clearing House                | 100%     |
 
 ## Installation Requirements
 
@@ -61,8 +59,8 @@ It is recommended to use 64bit quad core processor to provide enough processing 
 
 ## Setup
 
-### MVDS Components
-This is the procedure to install and run the MVDS in a local environment, the configuration will use basic settings.
+### DAPS (Omejdn)
+This is the procedure to install and run the DAPS component, the configuration will use basic settings.
 For a real scenario, a DNS and a proper Certification Authority are required.
  1. Download the source files from this repository. 
  2. Inside the “**DAPS**” folder there are the “**config**”, “**keys**” folders and the client registration script “**register_connector.sh**”.
@@ -128,19 +126,41 @@ The following steps describe how to integrate a TRUE Connector instance with DAP
   15. On the property **application.dapsJWKSUrl** and set the jwks endpoint of the DAPS as value (e.g. https://daps.mvds-clarus.eu/auth/jwks.json).
 
 Once the above configuration is completed, start the TRUE Connector using docker, and check the logs messages. If everything was set correctly the message **"Token is valid"** will be shown during each interaction and also at start up of the container.
- 
+
+### Metadata broker
+ 1. Inside the **“.env”** file set the value of the **“BROKER_DOMAIN”** with the actual host of the Metadata Broker.
+
+ 2. If necessary, open the **“docker-compose.yml”** and edit the metadata broker services ports.
+
+ 3. Run a command prompt or shell and execute the **“docker-compose pull”** command.
+
+ 4. After the pull is completed, run the command **“docker-compose up -d”** to up and running the container, the log will result like the figure below.
+
+![Metadatabroker log](docs/images/Metadata%20broker%20log.png)
+
+### TRUE Connector integration with Metadata broker
+ 1. Open a Browser and go to the Metadata Broker host url to download the certificate, then upload this certificate into the connector Trustore.
+
+ 2. Check the **"application-docker.properties"** file of ECC and look for the property called **"Application.selfdescription.brokerURL"** if the value already contains a parameter reference like **${BROKER_URL}** then move on next step else set here the Broker URL reference: https://YourBrokerhost/infrastructure.
+
+ 3. If the TRUE Connector instances are using Web Socket comunication protocol, then proceed with this step else move on the next one: In the same properties file, set the value of **“Application.selfdescription.registrateOnStartup”** as **“true”**, that option will enable the auto registration of the connector self-description when starting (or restarting) the connector container.
+
+ 4. Now check the **"docker-compose"** file and look for **"BROKER_URL"** within the **"environment"** variables of the ECC service, if it's value is a parameter reference like **${BROKER_URL}* then move on next step else put here the Broker URL reference: https://YourBrokerhost/infrastructure.
+
+ 5. Check the **".env"** file and look for **"BROKER_URL"** variable, set it to contain the Broker URL reference: https://YourBrokerhost/infrastructure
+
+ 6. Finally perform a **“docker-compose down”** and then **“docker-compose up”** commands to reset the containers of the connector.
+
+
 <!--## Endpoints-->
-
-## Important Notes
-
-In the current state of development, the Metadata Broker component has been properly integrated into MVDS.
 
 ## Support Team
 
-| Name                      |        E-mail         |
-| :------------------------ | :-------------------: |
-| [Luigi di Corrado][luigi] | luigi.dicorrado@eng.it|
-| [Luca Di Lorenzo][luca]   | luca.dilorenzo@eng.it |
+| Name                        |        E-mail          |
+| :-------------------------- | :--------------------: |
+| [Luigi di Corrado][luigi]   | luigi.dicorrado@eng.it |
+| [Gianluca Isgro'][gianluca] | gianluca.isgro@eng.it  |
+| [Luca Di Lorenzo][luca]     | luca.dilorenzo@eng.it  |
 
 <!--
 ## License
@@ -149,6 +169,8 @@ In the current state of development, the Metadata Broker component has been prop
 <!--LIST OF LINKS USED-->
 
 [luigi]: https://github.com/luidicorra
+
+[gianluca]: https://github.com/gianluca-isgro
 
 [luca]: https://github.com/ludilorenz
 
@@ -164,3 +186,6 @@ In the current state of development, the Metadata Broker component has been prop
 
 [omejdn]: https://github.com/Fraunhofer-AISEC/omejdn-server
 
+[metadatabroker]: https://github.com/International-Data-Spaces-Association/metadata-broker-open-core
+
+[clearinghouse]: https://github.com/International-Data-Spaces-Association/ids-clearing-house-service
